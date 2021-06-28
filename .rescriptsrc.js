@@ -55,117 +55,14 @@ const babelConfig = config => {
       // 获取所有 rule loader
       const loaders = section.oneOf
       // 获取 babl-loader 配置
-      const index = loaders.findIndex(section => section.loader.includes('babel-loader'))
-      // const babelLoader = loaders.find(section => section.loader && section.loader.includes('babel-loader'))
-      // const { loader } = babelLoader
-      // 在 plugins 中插入 babel-plugin-inport 插件
-      // loaders.splice(index, 0, {
-      //   ...babelLoader,
-      //   test: /\.(js|mjs)$/,
-      //   exclude: /core-js|core-js-pure|regenerator-runtime/,
-      //   include: /node_modules/,
-      // })
-      // console.log(babelLoader.options)
-      // babelLoader.configFile = true
-      loaders.splice(index, 2, {
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              configFile: false,
-              compact: false,
-              presets: [
-                [
-                  '@babel/preset-env', {
-                    modules: false,
-                    // debug: true,
-                    // corejs: {
-                    //   proposal: true,
-                    //   version: 3.15
-                    // },
-                    // // useBuiltIns: 'entry',
-                    // useBuiltIns: 'usage',
-                    // targets: 'IE 9'
-                  }
-                ],
-                [
-                  '@babel/preset-react', {
-                    'runtime': 'automatic'
-                  }
-                ]
-              ],
-              plugins: [
-                [
-                  '@babel/plugin-transform-runtime',
-                  {
-                    corejs: {
-                      proposals: true,
-                      version: 3
-                    }
-                  }
-                ]
-              ],
-              cacheDirectory: true,
-              cacheCompression: false,
-              sourceMaps: true,
-              inputSourceMap: true
-            }
-          }
-        ]
-      })
-      loaders.splice(index, 0, {
-        test: /\.(js|mjs)$/,
-        include: /node_modules/,
-        exclude: /core-js|core-js-pure|regenerator-runtime/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              configFile: false,
-              compact: false,
-              presets: [
-                [
-                  '@babel/preset-env', {
-                    modules: false,
-                    // debug: true,
-                    // corejs: {
-                    //   proposal: true,
-                    //   version: 3.15
-                    // },
-                    // // useBuiltIns: 'entry',
-                    // useBuiltIns: 'usage',
-                    // targets: 'IE 9'
-                  }
-                ],
-                [
-                  '@babel/preset-react', {
-                    'runtime': 'automatic'
-                  }
-                ]
-              ],
-              plugins: [
-                [
-                  '@babel/plugin-transform-runtime',
-                  {
-                    corejs: {
-                      proposals: true,
-                      version: 3
-                    }
-                  }
-                ]
-              ],
-              cacheDirectory: true,
-              cacheCompression: false,
-              sourceMaps: true,
-              inputSourceMap: true
-            }
-          }
-        ]
-      })
+      const loader = loaders.find(section => section.loader.includes('babel-loader'))
+      const loaderNM = loaders.find(section => section.test.toString().includes('(js|mjs)$'))
+
+      delete loader.include
+      loader.exclude = /node_modules/
+      // loaderNM.include = /node_modules/
+      // loaderNM.exclude = /core-js|core-js-pure|regenerator-runtime/
+      // loaderNM.exclude = /css-loader|webpack|runtime|react-dev-utils/
       return section
     },
     target,
@@ -182,7 +79,7 @@ const processBarConfig = config => {
 }
 
 module.exports = [
-  // babelConfig,
+  babelConfig,
   webpackConfig,
   // processBarConfig,
   ['use-babel-config', ' babel.config']

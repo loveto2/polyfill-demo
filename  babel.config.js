@@ -7,8 +7,8 @@ module.exports = {
           proposal: true,
           version: 3.15
         },
-        // useBuiltIns: 'entry',
-        useBuiltIns: 'usage',
+        useBuiltIns: 'entry',
+        // useBuiltIns: 'usage',
         targets: 'IE 9'
       }
     ],
@@ -22,10 +22,11 @@ module.exports = {
     [
       '@babel/plugin-transform-runtime',
       {
-        corejs: {
-          proposals: true,
-          version: 3
-        }
+        // corejs: {
+        //   proposals: true,
+        //   version: 3
+        // }
+        corejs: false
       }
     ]
   ]

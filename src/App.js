@@ -18,9 +18,11 @@ function App() {
     }
     download()
   }
-  downloadBtn()
+  console.log(downloadBtn)
   /****** case two *******/
-  const form = {}
+  const form = {
+    setFieldsValue() {}
+  }
   const item = {
     buyername: 'candy girl',
     taxnum: 1314520,
